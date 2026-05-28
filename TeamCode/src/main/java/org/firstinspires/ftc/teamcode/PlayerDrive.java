@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 // Instructions to connect: adb connect 192.168.43.1:5555
 // cd %localappdata%/android/sdk/platform-tools
-//@TeleOp(name = "PlayerDrive")
+@TeleOp(name = "PlayerDrive")
 public class PlayerDrive extends RobotBase {
 
     private static final Logger log = LoggerFactory.getLogger(PlayerDrive.class);
