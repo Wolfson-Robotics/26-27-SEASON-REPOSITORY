@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.AutoBase;
 import org.firstinspires.ftc.teamcode.debug.util.Async;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 
 import java.util.List;
 
@@ -67,15 +68,18 @@ public class RedAutoFarWithAprilTag extends AutoBase {
         
         List<AprilTagDetection> detections = aTagProc.getDetections();
         for (AprilTagDetection detection : detections) {
-            if (detection.id == GPP_TAG) { // 22
-                detectedTag = TagDetected.GPP;
-                break;
-            } else if (detection.id == PGP_TAG) { // 22
-                detectedTag = TagDetected.PGP;
-                break;
-            } else if (detection.id == PPG_TAG) { // 23
-                detectedTag = TagDetected.PPG;
-                break;
+            if (detection instanceof AprilTagSingleDetection) {
+                int id = ((AprilTagSingleDetection) detection).id;
+                if (id == GPP_TAG) { // 22
+                    detectedTag = TagDetected.GPP;
+                    break;
+                } else if (id == PGP_TAG) { // 22
+                    detectedTag = TagDetected.PGP;
+                    break;
+                } else if (id == PPG_TAG) { // 23
+                    detectedTag = TagDetected.PPG;
+                    break;
+                }
             }
         }
     }

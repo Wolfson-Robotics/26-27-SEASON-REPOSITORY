@@ -34,7 +34,7 @@ public class BlueAutoFarEnhanced extends AutoBase {
          */
         moveBot(33.98, 0.19, 0, 0);
         Async.sleep(1000);
-        launcher.applyVelocity(FAR_VELOCITY);
+        launcher1.applyVelocity(FAR_VELOCITY);
         //Async.sleep(1000);
         stopFeed();
         moveBot(15, 0.8, 0, 0);

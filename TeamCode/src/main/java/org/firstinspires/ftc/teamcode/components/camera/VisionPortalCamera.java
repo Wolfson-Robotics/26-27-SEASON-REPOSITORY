@@ -8,6 +8,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 import org.opencv.core.Mat;
 
 import java.util.ArrayList;
@@ -36,8 +37,11 @@ public class VisionPortalCamera extends CameraBase<VisionPortal> {
 
     //Gets the target tag if in camera else it returns null
     public static AprilTagDetection getTargetTag(AprilTagProcessor aTagProc, int id) {
+        if (aTagProc == null) return null;
         for (AprilTagDetection dTag : aTagProc.getDetections()) {
-            if (dTag.id == id) { return dTag; }
+            if (dTag instanceof AprilTagSingleDetection && ((AprilTagSingleDetection) dTag).id == id) {
+                return dTag;
+            }
         }
         return null;
     }

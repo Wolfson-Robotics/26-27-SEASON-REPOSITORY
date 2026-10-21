@@ -16,7 +16,7 @@ public class TestTurret extends AutoBase {
         super.init();
         initCamera();
 
-        turret.curTurretState = Turret.TurretState.GO_TO_GLOBAL_TARGET;
+        turret_one.curTurretState = Turret.TurretState.GO_TO_GLOBAL_TARGET;
     }
 
     final double ticsPerRev = 537.7;
@@ -38,38 +38,38 @@ public class TestTurret extends AutoBase {
         if (tag != null) {
             range = tag.ftcPose.range;
             yaw = tag.ftcPose.bearing;
-            rangeX = range * Math.sin(Math.toRadians(turret.globalYaw));
-            rangeY = range * Math.cos(Math.toRadians(turret.globalYaw));
+            rangeX = range * Math.sin(Math.toRadians(turret_one.globalYaw));
+            rangeY = range * Math.cos(Math.toRadians(turret_one.globalYaw));
         }
         double distX = pinpoint.getPosX(DistanceUnit.INCH);
         double distY = pinpoint.getPosY(DistanceUnit.INCH);
 
-        turret.TARGET_TAG = tag;
+        turret_one.TARGET_TAG = tag;
         if (gamepad1.xWasPressed()) {
-            turret.curTurretState = Turret.TurretState.GO_TO_ZERO;
+            turret_one.curTurretState = Turret.TurretState.GO_TO_ZERO;
         }
         if (gamepad1.yWasPressed()) {
-            turret.curTurretState = Turret.TurretState.FOLLOW_TAG;
+            turret_one.curTurretState = Turret.TurretState.FOLLOW_TAG;
         }
         //turret.loop();
-        turret.loop();
+        turret_one.loop();
 
         telemetry.addLine("|---POINT AT BLUE TAG---|");
         telemetry.addData("Range", range);
         telemetry.addData("Bearing", yaw);
         telemetry.addData("DistX", distX);
         telemetry.addData("DistY", distY);
-        telemetry.addData("robotHeading", turret.robotYaw);
+        telemetry.addData("robotHeading", turret_one.robotYaw);
         telemetry.addData("rangeX", rangeX);
         telemetry.addData("rangeY", rangeY);
         telemetry.addData("isAiming", isAiming);
-        telemetry.addData("encoderPos", turret.encoderPos);
-        telemetry.addData("localAngle", turret.turretYaw);
-        telemetry.addData("targetPos", turret.targetPos);
-        telemetry.addData("targetAngle", turret.TARGET_TURRET_YAW);
-        telemetry.addData("currentPos", turret.motor.getCurrentPosition());
-        telemetry.addData("globalAngle", turret.globalYaw);
-        telemetry.addData("targetGlobalYaw", turret.TARGET_GLOBAL_YAW);
+        telemetry.addData("encoderPos", turret_one.encoderPos);
+        telemetry.addData("localAngle", turret_one.turretYaw);
+        telemetry.addData("targetPos", turret_one.targetPos);
+        telemetry.addData("targetAngle", turret_one.TARGET_TURRET_YAW);
+        telemetry.addData("currentPos", turret_one.motor.getCurrentPosition());
+        telemetry.addData("globalAngle", turret_one.globalYaw);
+        telemetry.addData("targetGlobalYaw", turret_one.TARGET_GLOBAL_YAW);
         telemetry.update();
     }
 

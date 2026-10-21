@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.components.Turret;
 import org.firstinspires.ftc.teamcode.components.camera.VisionPortalCamera;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.slf4j.Logger;
@@ -55,6 +53,7 @@ public class PlayerDrive extends RobotBase {
     }
 
     /*
+       --------------------------
         Intake, Launcher, Transfer
        --------------------------
     */
@@ -63,9 +62,22 @@ public class PlayerDrive extends RobotBase {
     AprilTagDetection tag = null;
     boolean didFirst = false;
     boolean appliedVelocityDirectly = false;
+
     private void gamepad2Loop() {
-        if (gamepad2.xWasPressed()) { launcher.MAX_POWER -= .05; }
-        if (gamepad2.bWasPressed()) { launcher.MAX_POWER += .05; }
+        handleLauncher();
+        handleIntakeAndTransfer();
+        handleStopper();
+    }
+
+    private void handleLauncher() {
+        if (gamepad2.xWasPressed()) {
+            launcher1.MAX_POWER -= .05;
+            launcher2.MAX_POWER -= .05;
+        }
+        if (gamepad2.bWasPressed()) {
+            launcher1.MAX_POWER += .05;
+            launcher2.MAX_POWER += .05;
+        }
         
         // Updated dpad up/down for fixed velocity values
         if (gamepad2.dpadUpWasPressed()) { curVelTarget = FAR_VELOCITY; }
@@ -76,27 +88,38 @@ public class PlayerDrive extends RobotBase {
         }
 
         tag = VisionPortalCamera.getTargetTag(aTagProc, targetTag);
-        turret.TARGET_TAG = tag;
-        if (gamepad2.leftBumperWasPressed()) {
-            turret.switchTurretState(Turret.TurretState.FOLLOW_TAG);
-        }
-        turret.loop(); //NECESSARY FOR TURRET TO WORK
+        // turret_one.loop(); //NECESSARY FOR TURRET TO WORK
 
         //Either use velocity or allow drivers to use left stick to use power
+        // launcher 1
         if (gamepad2.rightBumperWasReleased()) {
-            if (launcher.targetVelocity == curVelTarget && !didFirst) {
-                launcher.applyVelocity(curVelTarget);
+            if (launcher1.targetVelocity == curVelTarget && !didFirst) {
+                launcher1.applyVelocity(curVelTarget);
                 appliedVelocityDirectly = true;
             } else {
-                launcher.switchVelocity(curVelTarget);
+                launcher1.switchVelocity(curVelTarget);
             }
             didFirst = true;
-        } else if (launcher.targetVelocity == 0) {
-            launcher.togglePower(gamepad2.left_trigger > 0.1, launcher.MAX_POWER);
+        } else if (launcher1.targetVelocity == 0) {
+            launcher1.togglePower(gamepad2.left_trigger > 0.1, launcher1.MAX_POWER);
         }
 
-        stableVelocity = launcher.reachedVelocity() && launcher.motor.getVelocity() > 0;
+        // launcher 2
+        if (gamepad2.aWasPressed()) {
+            if (launcher2.targetVelocity == curVelTarget) {
+                launcher2.applyVelocity(curVelTarget);
+            } else {
+                launcher2.switchVelocity(curVelTarget);
+            }
+        } else if (launcher2.targetVelocity == 0) {
+            launcher2.togglePower(gamepad2.left_trigger > 0.1, launcher2.MAX_POWER);
+        }
 
+        stableVelocity = launcher1.reachedVelocity() && launcher1.motor.getVelocity() > 0
+                && launcher2.reachedVelocity() && launcher2.motor.getVelocity() > 0;
+    }
+
+    private void handleIntakeAndTransfer() {
         if (gamepad2.dpadRightWasPressed()) {
             intake.swapDirection();
             transfer.swapDirection();
@@ -108,21 +131,28 @@ public class PlayerDrive extends RobotBase {
         transfer.togglePower(ACTIVE_INTAKE, transfer.MAX_POWER);
         lTransport.togglePower(ACTIVE_INTAKE, lTransport.MAX_POWER);
         rTransport.togglePower(ACTIVE_INTAKE, rTransport.MAX_POWER);
+    }
 
+    private void handleStopper() {
         stopper.togglePosition(!gamepad2.y);
     }
 
-    //Telemetry + Debug Data
+    /*
+         --------------------------
+          Telemetry + Debug Data
+         --------------------------
+      */
     private void commonPrintData() {
         telemetry.addLine("|||--IMPORTANT INFORMATION--|||");
-        telemetry.addData("Launcher Velocity", launcher.motor.getVelocity());
+        telemetry.addData("Launcher1 Velocity", launcher1.motor.getVelocity());
         telemetry.addData("Launcher Target Velocity (Supposed)", curVelTarget);
-        telemetry.addData("Launcher Target Velocity (ACTUAL)", launcher.targetVelocity);
+        telemetry.addData("Launcher1 Target Velocity (ACTUAL)", launcher1.targetVelocity);
         telemetry.addData("Launcher Velocity Stable", stableVelocity);
-        telemetry.addData("Launcher Power", launcher.motor.getPower());
+        telemetry.addData("Launcher1 Power", launcher1.motor.getPower());
+        telemetry.addData("Launcher2 Velocity", launcher2.motor.getVelocity());
+        telemetry.addData("Launcher2 Target Velocity (ACTUAL)", launcher2.targetVelocity);
+        telemetry.addData("Launcher2 Power", launcher2.motor.getPower());
         telemetry.addData("April Tag Visible", tag != null);
-        telemetry.addData("Turret State", turret.curTurretState);
-        telemetry.addData("Turret Target Global Yaw", turret.TARGET_GLOBAL_YAW);
         telemetry.addLine("|||-------------------------|||");
         telemetry.addLine();
         telemetry.addLine();
@@ -134,8 +164,8 @@ public class PlayerDrive extends RobotBase {
         telemetry.addData("Slow Down", "Left/Right Bumper");
         telemetry.addLine("|||-------------------------|||");
         telemetry.addLine("|||----GAMEPAD2 CONTROLS----|||");
-        telemetry.addData("Launcher", "Right Bumper (Toggle)");
-        telemetry.addData("Turret State Toggle", "Left Bumper (Toggle)");
+        telemetry.addData("Launcher 1", "Right Bumper (Toggle)");
+        telemetry.addData("Launcher 2", "A Button (Toggle)");
         telemetry.addData("Intake", "Right Trigger (Hold)");
         telemetry.addData("Open Stopper", "Y (Hold)");
         telemetry.addData("Swap Intake Direction", "Dpad Right (Toggle)");

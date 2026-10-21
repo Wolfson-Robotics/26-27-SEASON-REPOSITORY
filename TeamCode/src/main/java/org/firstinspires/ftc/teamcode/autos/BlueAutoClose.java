@@ -24,7 +24,7 @@ public class BlueAutoClose extends AutoBase {
         shootBetter(1610);
         shootBetter(1610);
         shootBetter(1610);
-        launcher.motor.setPower(0);
+        launcher1.motor.setPower(0);
         stopShoot();
     }
 

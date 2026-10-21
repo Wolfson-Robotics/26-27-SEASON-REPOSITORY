@@ -15,7 +15,7 @@ public class RedAutoFar extends AutoBase {
 
     @Override
     public void start() {
-        launcher.applyVelocity(FAR_VELOCITY);
+        launcher1.applyVelocity(FAR_VELOCITY);
         moveBot(5, 0.3, 0, 0);
         Async.sleep(250);
         turnBot(0.3,  17.5);
@@ -30,7 +30,7 @@ public class RedAutoFar extends AutoBase {
         Async.sleep(300);
         moveBot(45, 0.2, 0, 0);
         //Async.sleep(100);
-        launcher.applyVelocity(FAR_VELOCITY);
+        launcher1.applyVelocity(FAR_VELOCITY);
         stopFeed();
         moveBot(7, 0.4, 0, 0);
 //        stopFeed();

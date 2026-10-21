@@ -2,12 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import android.os.Environment;
 
-import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -31,8 +29,8 @@ public abstract class RobotBase extends OpMode {
 
     //Components
     public MecanumDrive driveSystem;
-    public RollerEx launcher;
-    public Turret turret;
+    public RollerEx launcher1, launcher2, launcher;
+    public Turret turret_one, turret_two;
     public Roller<DcMotor> intake, transfer, lTransport, rTransport;
     public ServoEx<Servo> stopper;
 
@@ -60,10 +58,19 @@ public abstract class RobotBase extends OpMode {
         stopRequested.set(false);
         driveSystem = new MecanumDrive(hardwareMap, "lf_drive", "lb_drive", "rf_drive", "rb_drive");
 
-        launcher = new RollerEx(hardwareMap, "launcher");
-        launcher.swapDirection();
-        launcher.motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, launcherPIDF);
-        launcher.MAX_POWER = 1;
+        launcher1 = new RollerEx(hardwareMap, "launcher");
+        launcher1.swapDirection();
+        launcher1.motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, launcherPIDF);
+        launcher1.MAX_POWER = 1;
+
+        launcher2 = new RollerEx(hardwareMap, "launcher2");
+        launcher2.swapDirection();
+        launcher2.motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, launcherPIDF);
+        launcher2.MAX_POWER = 1;
+
+        launcher = launcher1;
+
+        turret_one = new Turret(hardwareMap, "turret_one");
 
         imu = (IMU) hardwareMap.get("imu");
         ImuOrientationOnRobot o = new RevHubOrientationOnRobot(
@@ -83,13 +90,6 @@ public abstract class RobotBase extends OpMode {
                 GoBildaPinpointDriver.EncoderDirection.REVERSED
         );
         pinpoint.resetPosAndIMU();
-
-        turret = new Turret((DcMotorEx) hardwareMap.get("aimer"));
-        turret.imu = imu;
-        turret.TICKS_PER_REV = 537.7;
-        turret.GEAR_RATIO = 92.0 / 200.0;
-        turret.MAX_POWER = 0.5;
-        turret.curTurretState = Turret.TurretState.GO_TO_ZERO;
 
         transfer = new Roller<>(hardwareMap, "transfer");
         transfer.MAX_POWER = 0.8;
@@ -125,8 +125,6 @@ public abstract class RobotBase extends OpMode {
     public static boolean isStopRequested() {
         return stopRequested.get();
     }
-
-
 
     /*
     -------

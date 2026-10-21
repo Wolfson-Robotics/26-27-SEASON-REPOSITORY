@@ -33,10 +33,10 @@ public abstract class AutoBase extends RobotBase {
                 n -> n.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE)
         );
         launcher.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        launcher2.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         stopper.applyPosition(stopper.MIN_POSITION);
-        // Inside your start() method or init block
-        turret.switchTurretState(Turret.TurretState.GO_TO_ZERO);
+        // turret.switchTurretState(Turret.TurretState.GO_TO_ZERO);
 
         FAR_VELOCITY = 1555;
     }
@@ -66,21 +66,21 @@ public abstract class AutoBase extends RobotBase {
     int count = 0;
     protected void setLauncher(double velocity) {
         launcher.applyVelocity(velocity);
+        launcher2.applyVelocity(velocity);
 
         ElapsedTime time = new ElapsedTime();
         time.reset();
         int count = 0;
-        while (!isStopRequested() && time.seconds() < 5 && !launcher.reachedVelocity()) {
+        while (!isStopRequested() && time.seconds() < 5 && (!launcher.reachedVelocity() || !launcher2.reachedVelocity())) {
             count++;
             telemetry.addData("Seconds", time.seconds());
-            telemetry.addData("Launcher Vel", launcher.motor.getVelocity());
-            telemetry.addData("Reached Stable Vel", launcher.reachedVelocity());
+            telemetry.addData("Launcher 1 Vel", launcher.motor.getVelocity());
+            telemetry.addData("Launcher 2 Vel", launcher2.motor.getVelocity());
+            telemetry.addData("Reached Stable Vel", launcher.reachedVelocity() && launcher2.reachedVelocity());
             telemetry.addData("Target Vel", velocity);
             telemetry.addData("Count", count);
             telemetry.update();
         }
-
-
 
         count++;
     }
@@ -174,6 +174,7 @@ public abstract class AutoBase extends RobotBase {
     //Stop all the shooting
     public void stopShoot() {
         launcher.applyPower(0);
+        launcher2.applyPower(0);
         stopFeed();
     }
 

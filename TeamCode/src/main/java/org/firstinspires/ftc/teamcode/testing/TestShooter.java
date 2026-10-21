@@ -33,7 +33,7 @@ public class TestShooter extends AutoBase {
             // Execute the shoot sequence immediately upon commission
             shootBetter(targetVelocity);
             // Ensure flywheel velocity goes back to 0/at rest after shooting
-            launcher.applyVelocity(0);
+            launcher1.applyVelocity(0);
         }
 
         pTelem.update();

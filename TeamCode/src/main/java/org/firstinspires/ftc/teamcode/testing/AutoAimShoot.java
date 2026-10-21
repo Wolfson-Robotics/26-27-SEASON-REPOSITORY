@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.AutoBase;
 import org.firstinspires.ftc.teamcode.debug.util.Async;
 import org.firstinspires.ftc.teamcode.util.LinearRegression;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection;
 
 public class AutoAimShoot extends AutoBase {
 
@@ -34,7 +35,7 @@ public class AutoAimShoot extends AutoBase {
         Pose3D posData = null;
         while (posData == null) {
             for (AprilTagDetection tag : aTagProc.getDetections()) {
-                if (tag.id == BLUE_TAG) {
+                if (tag instanceof AprilTagSingleDetection && ((AprilTagSingleDetection) tag).id == BLUE_TAG) {
                     posData = tag.robotPose;
                     telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
                             posData.getPosition().x,
