@@ -10,66 +10,31 @@ public class BlueAutoFarEnhanced extends AutoBase {
 
     @Override
     public void start() {
-        moveBot(5, 0, 0, 0);
+        // 1. Move forward
+        moveBot(5, -0.3, 0, 0);
         Async.sleep(1000);
-        turnBot(0.2,  -15);
-        shootBetter(FAR_VELOCITY);
-        Async.sleep(1000);
-        moveBot(10, 0, 0, 10);
-        Async.sleep(1000);
-        turnBot(0.0, -45);
-        Async.sleep(1000);
-        // New instructions
-        //moveBot(6.81, 0, 0, 0.5); // New instruction
-        stopper.applyPosition(stopper.MAX_POSITION);
-        //stopper.togglePosition(true);
-        //Async.sleep(1000);
-        runFeed();
-        Async.sleep(1500);        /*
-        moveBot(20.76, 0.4, 0, 0);
-        Async.sleep(1000);
-        moveBot(5.83, 0.4, 0, 0);
-        Async.sleep(1000);
-        moveBot(7.39, 0.4, 0, 0);
-         */
-        /*moveBot(33.98, 0.19, 0, 0);
-        Async.sleep(1000);
+
+        // 2. Spin up launcher and wait longer for it to reach full velocity
         launcher.applyVelocity(FAR_VELOCITY);
-        //Async.sleep(1000);
-        stopFeed();
-        moveBot(15, 0.8, 0, 0);
-        Async.sleep(500);
-        moveBot(50.2, -0.5, 0, 0);
-        Async.sleep(1000);
-        //turnBot(0.5, 56.75);
-        turnBot(0.5, 64.13);
-        Async.sleep(500);
-        moveBot(14.45, -1, 0, 0);
-        Async.sleep(500);
-        //turnBot(0.5, -29.40);
-        turnBot(0.5, -8);
-        //moveBot(15.39, -1, 0, 0);
-        shootBetter(FAR_VELOCITY);
-        moveBot(16, 0.2, 0, 0);
-        //moveBot(16, 0.2, 0, 0);
-        //Async.sleep(250);
-        //moveBot(10, 0.7, 0, 0);
+        Async.sleep(1500);
 
-        /*
-        moveBot(8, 0.1, 0, -0.4);
-        Async.sleep(1000);
-        moveBot(52, 0.2, 0, 0);
-        Async.sleep(1000);
-        stopFeed();
-        //Go back
+        // 3. Open stopper using 0.0 (since 0.6 closed it) and KEEP IT OPEN while shooting
+        stopper.applyPosition(0.0);
+        Async.sleep(300);
 
-        moveBot(50, -0.4, 0, 0);
+        // 4. Run feed to shoot and give it plenty of time (4 seconds) to shoot all balls
+        runFeed();
+        Async.sleep(4000);
+        stopFeed();
+        stopShoot();
+
+        // 5. Move 1 foot (12 inches) to the right
+        moveBot(12, 0, 0, -0.4);
         Async.sleep(1000);
-        moveBot(30, 0, 0, 0.4);
+
+        // 6. Turn 45 degrees counterclockwise
+        turnBot(0.3, 45);
         Async.sleep(1000);
-        turnBot(0.2, -57.3);
-        Async.sleep(1000);
-        moveBot(16, 0.2, 0, 0);*/
     }
 
     @Override

@@ -34,8 +34,7 @@ public abstract class AutoBase extends RobotBase {
         );
         launcher.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        stopper.applyPosition(stopper.MIN_POSITION);
-        // Inside your start() method or init block
+        stopper.applyPosition(stopper.MIN_POSITION); 
         turret.switchTurretState(Turret.TurretState.GO_TO_ZERO);
 
         FAR_VELOCITY = 1350;
