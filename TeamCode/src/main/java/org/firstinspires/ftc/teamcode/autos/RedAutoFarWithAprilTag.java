@@ -66,7 +66,7 @@ public class RedAutoFarWithAprilTag extends AutoBase {
         if (aTagProc == null) return;
         
         List<AprilTagDetection> detections = aTagProc.getDetections();
-        for (AprilTagDetection detection : detections) {
+       /* for (AprilTagDetection detection : detections) {
             if (detection.id == GPP_TAG) { // 22
                 detectedTag = TagDetected.GPP;
                 break;
@@ -77,6 +77,6 @@ public class RedAutoFarWithAprilTag extends AutoBase {
                 detectedTag = TagDetected.PPG;
                 break;
             }
-        }
+        } */
     }
 }

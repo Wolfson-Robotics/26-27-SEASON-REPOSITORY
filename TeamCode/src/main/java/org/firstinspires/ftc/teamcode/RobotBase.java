@@ -48,7 +48,7 @@ public abstract class RobotBase extends OpMode {
 
     PIDFCoefficients launcherPIDF = new PIDFCoefficients(167, 0, 0, 13.3);
 
-    public double FAR_VELOCITY = 1625;
+    public double FAR_VELOCITY = 1350;
     public double CLOSE_VELOCITY = 1400;
     public final int BLUE_TAG = 20, RED_TAG = 24, GPP_TAG = 22, PGP_TAG = 22, PPG_TAG = 23;
 
@@ -92,19 +92,23 @@ public abstract class RobotBase extends OpMode {
         turret.curTurretState = Turret.TurretState.GO_TO_ZERO;
 
         transfer = new Roller<>(hardwareMap, "transfer");
-        transfer.MAX_POWER = 0.8;
+        transfer.swapDirection();
+        transfer.MAX_POWER = 0.6;
         lTransport = new Roller<>(hardwareMap, "left transport");
         lTransport.swapDirection();
         lTransport.MAX_POWER = 0.8;
         rTransport = new Roller<>(hardwareMap, "right transport");
+        rTransport.swapDirection();
         rTransport.MAX_POWER = 0.8;
 
         stopper = new ServoEx<>(hardwareMap, "stopper");
         stopper.swapDirection();
-        stopper.MIN_POSITION = 0.27; //Closed
-        stopper.MAX_POSITION = 0.4; //Open
+        stopper.MIN_POSITION = 0.0; //Closed
+        stopper.MAX_POSITION = 0.6; //Open
+        stopper.applyPosition(stopper.MIN_POSITION); // Default starting position for all opmodes
 
         intake = new Roller<>(hardwareMap, "intake");
+        intake.swapDirection();
     }
 
     //By default this will not be called in init() of base, so extending classes have to call it to use it

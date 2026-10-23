@@ -15,8 +15,11 @@ public class BlueAutoFar extends AutoBase {
     @Override
     public void start() {
 
+        // pivot is general turn at a specific speed, ends once distIN in complete
+        // degrees is a specific angle the robot has to pivot to, rather than a more general - lke pivot
+
         launcher.applyVelocity(FAR_VELOCITY);
-        moveBot(5, 0.3, 0, 0);
+        moveBot(12, 0.3, 0, 0);
         Async.sleep(250);
         turnBot(0.3,  -15.5);
         Async.sleep(250);

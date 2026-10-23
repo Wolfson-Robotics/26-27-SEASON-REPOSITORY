@@ -38,7 +38,7 @@ public abstract class AutoBase extends RobotBase {
         // Inside your start() method or init block
         turret.switchTurretState(Turret.TurretState.GO_TO_ZERO);
 
-        FAR_VELOCITY = 1555;
+        FAR_VELOCITY = 1350;
     }
 
     @Override

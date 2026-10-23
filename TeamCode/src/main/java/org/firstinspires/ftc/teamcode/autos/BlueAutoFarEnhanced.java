@@ -10,7 +10,7 @@ public class BlueAutoFarEnhanced extends AutoBase {
 
     @Override
     public void start() {
-        moveBot(5, 0.2, 0, 0);
+        moveBot(5, 0, 0, 0);
         Async.sleep(1000);
         turnBot(0.2,  -15);
         shootBetter(FAR_VELOCITY);

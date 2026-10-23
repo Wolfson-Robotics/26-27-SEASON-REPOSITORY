@@ -33,7 +33,7 @@ public class AutoAimShoot extends AutoBase {
         //Get blue april tag positional data
         Pose3D posData = null;
         while (posData == null) {
-            for (AprilTagDetection tag : aTagProc.getDetections()) {
+          /*  for (AprilTagDetection tag : aTagProc.getDetections()) {
                 if (tag.id == BLUE_TAG) {
                     posData = tag.robotPose;
                     telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)",
@@ -45,7 +45,7 @@ public class AutoAimShoot extends AutoBase {
                             posData.getOrientation().getRoll(AngleUnit.DEGREES),
                             posData.getOrientation().getYaw(AngleUnit.DEGREES)));
                 }
-            }
+            } */
         }
 
 

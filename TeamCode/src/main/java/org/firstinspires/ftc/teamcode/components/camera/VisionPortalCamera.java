@@ -36,9 +36,9 @@ public class VisionPortalCamera extends CameraBase<VisionPortal> {
 
     //Gets the target tag if in camera else it returns null
     public static AprilTagDetection getTargetTag(AprilTagProcessor aTagProc, int id) {
-        for (AprilTagDetection dTag : aTagProc.getDetections()) {
+       /* for (AprilTagDetection dTag : aTagProc.getDetections()) {
             if (dTag.id == id) { return dTag; }
-        }
+        } */
         return null;
     }
 

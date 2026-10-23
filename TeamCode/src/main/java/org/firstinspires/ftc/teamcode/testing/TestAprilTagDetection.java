@@ -21,7 +21,7 @@ public class TestAprilTagDetection extends RobotBase {
             List<AprilTagDetection> detections = aTagProc.getDetections();
             telemetry.addData("# Tags Detected", detections.size());
 
-            for (AprilTagDetection detection : detections) {
+           /* for (AprilTagDetection detection : detections) {
                 String customName = getTagName(detection.id);
                 
                 if (detection.metadata != null) {
@@ -33,7 +33,7 @@ public class TestAprilTagDetection extends RobotBase {
                     telemetry.addLine(String.format("\n==== (ID %d) Unknown | %s", detection.id, customName));
                     telemetry.addLine(String.format("Center %6.0f %6.0f (pixels)", detection.center.x, detection.center.y));
                 }
-            }
+            } */
         } else {
             telemetry.addLine("AprilTag Processor not initialized.");
         }
