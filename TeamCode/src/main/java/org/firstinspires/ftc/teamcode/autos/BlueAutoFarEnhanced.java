@@ -15,9 +15,9 @@ public class BlueAutoFarEnhanced extends AutoBase {
         turnBot(0.2,  -15);
         shootBetter(FAR_VELOCITY);
         Async.sleep(1000);
-        moveBot(26.88, 0.3, 0, 0);
+        moveBot(10, 0, 0, 10);
         Async.sleep(1000);
-        turnBot(0.4, -52.25);
+        turnBot(0.0, -45);
         Async.sleep(1000);
         // New instructions
         //moveBot(6.81, 0, 0, 0.5); // New instruction
@@ -32,7 +32,7 @@ public class BlueAutoFarEnhanced extends AutoBase {
         Async.sleep(1000);
         moveBot(7.39, 0.4, 0, 0);
          */
-        moveBot(33.98, 0.19, 0, 0);
+        /*moveBot(33.98, 0.19, 0, 0);
         Async.sleep(1000);
         launcher.applyVelocity(FAR_VELOCITY);
         //Async.sleep(1000);
