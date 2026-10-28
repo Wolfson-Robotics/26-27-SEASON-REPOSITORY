@@ -138,7 +138,7 @@ public abstract class RobotBase extends OpMode {
     -------
      */
     public static final double NOMINAL_VOLTAGE = 14; //TODO: Check battery voltage
-    public static final double TOP_SCALE_FACTOR = 1.2; //120%
+    public static final double TOP_SCALE_FACTOR = 1.4; //140%
     public static final double NO_VOLTAGE = -1;
     protected double scaleVoltPF() {
         double currentVoltage = getVoltage();
